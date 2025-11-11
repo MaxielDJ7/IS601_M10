@@ -72,3 +72,33 @@ def page(browser):
     page = browser.new_page()
     yield page
     page.close()
+
+# ======================================================================================
+# Pytest Command-Line Options and Test Collection
+# ======================================================================================
+def pytest_addoption(parser):
+    """
+    Add command line options like --preserve-db or --run-slow, if needed.
+    """
+    parser.addoption(
+        "--preserve-db",
+        action="store_true",
+        default=False,
+        help="Keep test database after tests, and skip table truncation."
+    )
+    parser.addoption(
+        "--run-slow",
+        action="store_true",
+        default=False,
+        help="Run tests marked as slow"
+    )
+
+def pytest_collection_modifyitems(config, items):
+    """
+    Automatically skip slow tests unless --run-slow is specified.
+    """
+    if not config.getoption("--run-slow"):
+        skip_slow = pytest.mark.skip(reason="use --run-slow to run")
+        for item in items:
+            if "slow" in item.keywords:
+                item.add_marker(skip_slow)

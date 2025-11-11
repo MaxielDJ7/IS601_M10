@@ -51,3 +51,11 @@ class UserLogin(PasswordMixin):
         max_length=50,
         example="johndoe123"
     )
+    
+class UserRead(UserBase):
+    """Schema for returning user data (omit password hash)"""
+    id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)  # maps directly from ORM model

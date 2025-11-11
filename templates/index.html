@@ -265,7 +265,7 @@
                     - body: JSON.stringify({ a: a, b: b }): Converts the JavaScript object { a: a, b: b } into a JSON string
                       to be sent in the request body.
                 */
-                const response = await fetch('/' + operation, {
+                const response = await fetch(`http://localhost:8000/${operation}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ a: a, b: b })

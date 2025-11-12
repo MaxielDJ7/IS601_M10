@@ -21,6 +21,18 @@ from app.models.user import User
 from app.config import settings
 from app.database_init import init_db, drop_db
 
+# tests/conftest.py  (TOP LEVEL)
+
+import os
+import pytest
+
+@pytest.fixture(autouse=True)
+def set_sqlite_env(monkeypatch):
+    """
+    Force SQLite DB for all unit tests (runs automatically before each test).
+    """
+    monkeypatch.setenv("DATABASE_URL", "sqlite:///./unit_test.db")
+    print(">>>> DATABASE_URL patched:", os.environ.get("DATABASE_URL"))
 
 # ======================================================================================
 # Logging Configuration

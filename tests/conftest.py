@@ -14,8 +14,9 @@ from faker import Faker
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
+from unittest.mock import MagicMock
 
-from app.database import Base, get_engine, get_sessionmaker
+from app.database import Base, get_engine, get_sessionmaker, SessionLocal
 from app.models.user import User
 from app.config import settings
 from app.database_init import init_db, drop_db
@@ -105,6 +106,18 @@ class ServerStartupError(Exception):
 # ======================================================================================
 # Primary Database Fixtures
 # ======================================================================================
+
+@pytest.fixture
+def mock_db_session(monkeypatch):
+    """Override get_db for unit tests to avoid using a real DB."""
+    mock_session = MagicMock()
+
+    def override_get_db():
+        yield mock_session
+
+    monkeypatch.setattr("app.database.get_db", override_get_db)
+    return mock_session
+
 @pytest.fixture(scope="session", autouse=True)
 def setup_test_database(request):
     """

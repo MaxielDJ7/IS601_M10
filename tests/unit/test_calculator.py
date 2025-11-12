@@ -29,7 +29,7 @@ Number = Union[int, float]
         "add_zeros",
     ]
 )
-def test_add(a: Number, b: Number, expected: Number) -> None:
+def test_add(a: Number, b: Number, expected: Number, mock_db_session) -> None:
     """
     Test the 'add' function with various combinations of integers and floats.
 
@@ -78,7 +78,7 @@ def test_add(a: Number, b: Number, expected: Number) -> None:
         "subtract_zeros",
     ]
 )
-def test_subtract(a: Number, b: Number, expected: Number) -> None:
+def test_subtract(a: Number, b: Number, expected: Number, mock_db_session) -> None:
     """
     Test the 'subtract' function with various combinations of integers and floats.
 
@@ -127,7 +127,7 @@ def test_subtract(a: Number, b: Number, expected: Number) -> None:
         "multiply_zero_and_positive_integer",
     ]
 )
-def test_multiply(a: Number, b: Number, expected: Number) -> None:
+def test_multiply(a: Number, b: Number, expected: Number, mock_db_session) -> None:
     """
     Test the 'multiply' function with various combinations of integers and floats.
 
@@ -176,7 +176,7 @@ def test_multiply(a: Number, b: Number, expected: Number) -> None:
         "divide_zero_by_positive_integer",
     ]
 )
-def test_divide(a: Number, b: Number, expected: float) -> None:
+def test_divide(a: Number, b: Number, expected: float, mock_db_session) -> None:
     """
     Test the 'divide' function with various combinations of integers and floats.
 
